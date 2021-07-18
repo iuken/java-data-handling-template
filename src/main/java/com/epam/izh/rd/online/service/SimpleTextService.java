@@ -13,7 +13,7 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String removeString(String base, String remove) {
-        return null; //TODO
+        return base.replaceAll(remove, "");
     }
 
     /**
@@ -24,7 +24,7 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isQuestionString(String text) {
-        return false; //TODO
+        return (text.charAt(text.length()) == 15); //TODO
     }
 
     /**
@@ -59,6 +59,16 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isPalindrome(String string) {
-       return false; //TODO
+        char [] chars = string.toCharArray();
+        int checklimit = chars.length/2;
+        if (string.equals("") || string.equals(null)){
+            return false;
+        }
+        for (int i = 0; i < checklimit; i++){
+            if (chars[i] != chars[chars.length-i]){
+                return false;
+            }
+        }
+       return true; //TODO
     }
 }
