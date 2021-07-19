@@ -16,7 +16,6 @@ public class SimpleFileRepository implements FileRepository {
     @Override
     public long countFilesInDirectory(String path) {
         long counter = 0;
-        //adding "src/main/resources/" to the path, because file not found in resources folder. May be some project setting is wrong... don't know.
         File file = new File("src/main/resources/" + path);
         File[] fileList = file.listFiles();
         for (File interFile : fileList) {
@@ -87,9 +86,6 @@ public class SimpleFileRepository implements FileRepository {
     public boolean createFile(String path, String name) {
         File dir = new File(getClass().getResource("/").getPath() + path);
         File file = new File(dir.getPath() + File.separator + name);
-//        if (!dir.exists()) {
-//            dir.mkdir();
-//        }
         try {
             return file.createNewFile();
         } catch (IOException e) {
