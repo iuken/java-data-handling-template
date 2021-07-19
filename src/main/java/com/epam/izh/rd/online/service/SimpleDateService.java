@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.temporal.ChronoField.DAY_OF_YEAR;
+
 public class SimpleDateService implements DateService {
 
     /**
@@ -14,7 +16,8 @@ public class SimpleDateService implements DateService {
      */
     @Override
     public String parseDate(LocalDate localDate) {
-        return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return localDate.format(formatter);
     }
 
     /**
@@ -25,7 +28,8 @@ public class SimpleDateService implements DateService {
      */
     @Override
     public LocalDateTime parseString(String string) {
-        return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(string, formatter);
     }
 
     /**
@@ -37,7 +41,7 @@ public class SimpleDateService implements DateService {
      */
     @Override
     public String convertToCustomFormat(LocalDate localDate, DateTimeFormatter formatter) {
-        return null;
+        return localDate.format(formatter);
     }
 
     /**
@@ -47,7 +51,20 @@ public class SimpleDateService implements DateService {
      */
     @Override
     public long getNextLeapYear() {
-        return 0;
+        long currentYear = LocalDate.now().getYear();
+        while (true) {
+            currentYear++;
+            if (currentYear % 4 == 0) {
+                if (currentYear % 100 == 0) {
+                    if (currentYear % 400 == 0) {
+                        break;
+                    }
+                    continue;
+                }
+                break;
+            }
+        }
+        return currentYear;
     }
 
     /**
@@ -57,7 +74,11 @@ public class SimpleDateService implements DateService {
      */
     @Override
     public long getSecondsInYear(int year) {
-        return 0;
+        LocalDate localDate = LocalDate.of(year, 12, 31);
+        long days = localDate.getLong(DAY_OF_YEAR);
+        long sec = days * 24 * 60 * 60;
+
+        return sec;
     }
 
 
